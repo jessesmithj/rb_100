@@ -1,0 +1,4 @@
+# Ignore files
+notes
+rubytest.rb
+.DS_Store
