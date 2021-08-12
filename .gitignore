@@ -2,3 +2,4 @@
 notes
 rubytest.rb
 .DS_Store
+.rubocop.yml
