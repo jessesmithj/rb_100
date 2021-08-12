@@ -74,10 +74,10 @@ Casual:
 def every_other(array)
   every_other_element = []
   
-  array.each_with_index do |num, ind| 
-    if ind.even? || ind == 0
+  array.each_with_index do |num, ind|
+    if ind.even? || ind.zero?
       every_other_element.push(num)
-    else 
+    else
       next
     end
   end
@@ -89,5 +89,3 @@ end
 array = [99, 2, 1, 4, 3, 6, 5, 8, 7, 122]
 
 every_other(array)
-
-
