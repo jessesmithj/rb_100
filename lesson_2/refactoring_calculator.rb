@@ -1,53 +1,66 @@
+
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_messages.yml')
+
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
 def valid_number?(num)
-  num.to_i != 0
+  num.to_i.to_s == num
+  # Integer(num) rescue false
+end
+
+def float?(num)
+  num.to_f.to_s == num
 end
 
 def operation_to_message(op)
-  case op
-    when '1'
-      "Adding"
-    when '2'
-      "Subtracting"
-    when '3'
-      "Multiplying"
-    when '4'
-      "Dividing"
-  end
+  word = case op
+         when '1'
+           "Adding"
+         when '2'
+           "Subtracting"
+         when '3'
+           "Multiplying"
+         when '4'
+           "Dividing"
+         end
+
+  x = "A random line of code"
+
+  word
 end
 
 
-prompt("Welcome to Calculator. Enter your name:")
+prompt(MESSAGES["welcome"])
 name = String.new
 loop do
   name = Kernel.gets().chomp()
 
   break unless name.empty? 
-  prompt("Make sure to use a valid name.")
+  prompt(MESSAGES["valid_name"])
 end
 
-number1 = nil
-number2 = nil
+number1 = ''
+number2 = ''
 
-prompt("Hi #{name}! Great day for a calculation.")
+prompt("Hi #{name}! Great day for a caclulation.")
 
 loop do #main loop
   loop do
-    prompt("What is the first number?")
-    number1 = Kernel.gets().chomp().to_i()
+    prompt(MESSAGES["first_num"])
+    number1 = Kernel.gets().chomp()
 
-    break if valid_number?(number1)
+    break if valid_number?(number1) || float?(number1)
     Kernel.puts("Number is invalid. Try again.")
   end
 
   loop do
-    prompt("What is the second number?")
-    number2 = Kernel.gets().chomp().to_i()
+    prompt(MESSAGES["second_num"])
+    number2 = Kernel.gets().chomp()
 
-    break if valid_number?(number2)
+    break if valid_number?(number2) || float?(number2)
     Kernel.puts("Number is invalid. Try again.")
   end
 
@@ -76,11 +89,11 @@ loop do #main loop
 
   result = case operator 
           when '1'
-            number1 + number2
+            number1.to_i + number2.to_i
           when '2' 
-            number1 - number2
+            number1.to_i - number2.to_i
           when '3' 
-            number1 * number2
+            number1.to_i * number2.to_i
           when '4' 
             number1.to_f() / number2.to_f()
           end
