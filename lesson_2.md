@@ -266,8 +266,73 @@ A method that does not mutate its arguments or caller is non-mutating  with resp
 
 We’ve also learned that **assignment in Ruby acts like a non-mutating  method** — it doesn’t mutate any objects, but does alter the binding for  the target variable. 
 
-
-
 - [Variable References and Mutability of Ruby Objects](https://launchschool.com/blog/references-and-mutability-in-ruby)
 - [Mutating and Non-Mutating Methods in Ruby](https://launchschool.com/blog/mutating-and-non-mutating-methods)
 - [Object Passing in Ruby - Pass by Reference or Pass by Value](https://launchschool.com/blog/object-passing-in-ruby)
+
+
+
+- **In Ruby, variables are references to objects and do not contain objects themselves**. When an object is passed in as an argument to a method, the method parameter is essentially acting as variable referencing that object.
+
+  - When an object is passed to a method call as an argument, the parameter assigned to it acts as a pointer to the original object.
+  - Ruby creates references to objects when passing them as method arguments, rather than creating copies of objects.
+
+- In Ruby, **re-assigning a variable has no effect on the object the  variable is bound to; it merely binds the variable to a different  object.**
+
+  - Re-assigning a variable within a method doesn't affect the object that the variable is pointing to outside of the method.
+
+  When a local variable is initialized in the outer scope, it can be  referenced from within the block's inner scope, but not vice versa. **Even if a local variable and the method have the same name, Ruby will give precedence to the local variable inside the block.**
+
+  Variables are essentially labels that act as pointers to some physical space (memory address) in your computer.
+
+
+
+
+
+- **Making your code readable is of paramount importance, not only for others, but for future self.**
+- If you find yourself constantly looking at a method's implementation  every time you use it, it's a sign that the method needs to be improved.
+- If you have some methods that output values, then preface those methods with `display_` or `print_`
+- A method should do one thing, and be named appropriately. If you can  treat a method as a "black box", then it's a well designed method.
+- You should be able to use a method called `total` and understand that it returns a value, and a method called `print_total` returns nil, without looking at the implementation of either. On the other hand, if there's a method called `total!`, then it's a sign that there is some side effect somewhere.
+  - Don't mix up those concerns. Don't write a method that mutates,  outputs and returns a meaningful value. Make sure your methods just do  one of those things.
+- Don't mutate a collection while iterating through it. You can, however, mutate the individual elements within that collection, just not the collection itself. Otherwise, you'll get unexpected behavior.
+- **Variable shadowing** occurs when you choose a local variable in an inner  scope that shares the same name as an outer scope. It's incredibly easy  to make this mistake, and essentially prevents you from accessing the  outer scope variable from an inner scope.
+  - Be careful about choosing appropriate block variables (the thing between the `| |`) when working with blocks. If you pick a name that is identical to an  outer scope variable, variable shadowing will prevent you from using the outer scope variable.
+- We recommend that you **never use assignment in a conditional**
+
+Suppose you have an array of names, and you want to print out a string  for every name in the array, but you don't care about the actual names.  In those situations, **use an underscore to signify that we don't care  about this particular parameter.**
+
+```ruby
+names = ['kim', 'joe', 'sam']
+names.each { |_| puts "got a name!" }
+```
+
+We can't say this enough: spend the time programming. Learn to debug  through problems, struggle with it, search for the right terms, play  around with the code, and you'll be able to transform into a  professional developer. Because that's exactly what professional  developers do on a daily basis.
+
+```
+&&` has higher precedence than `||
+```
+
+A **variable's scope** determines where in a program a variable is available for use, in other words where it can be accessed.
+
+
+
+```ruby
+method_invocation { block }
+```
+
+```ruby
+arr = [1, 2, 3]
+
+arr.each do |num|
+  a = 5      # a is initialized here
+end
+
+puts a       # is it accessible here?
+```
+
+In the above code, the `do end` is an argument passed to the method invocation for `each`. As such, the `do end` here defines a block, and consequently creates an inner scope making `a` not accessible. Since it is not accessible the `puts a` at the last line will result in an error.
+
+The `do ... end` or `{ ... }` **IS** a block if it follows a method invocation.
+
+Blocks cannot run on their own, they must be associted with a method - inside a block we can put any ruby method we want

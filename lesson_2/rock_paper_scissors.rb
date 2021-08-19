@@ -1,20 +1,24 @@
 VALID_CHOICES = %w(rock paper scissors)
 
+def prompt(message)
+  Kernel.puts("=> #{message}")
+end
+
+def win?(first, second)
+  (first == 'rock' && second == 'scissors') ||
+    (first == 'paper' && second == 'rock') ||
+    (first == 'scissors' && second == 'paper')
+end
+
 def display_results(player, computer)
   if player == computer
     prompt("Cat's game.")
-  elsif (player == 'rock' && computer == 'scissors') ||
-        (player == 'paper' && computer == 'rock') ||
-        (player == 'scissors' && computer == 'paper')
+  elsif win?(player, computer)
     prompt("You won!")
   else
     prompt("Computer won!")
   end
 end
-
-# def validate_choice(choice)
-#   VALID_CHOICES.include?(choice)
-# end
 
 loop do
   choice = ''
