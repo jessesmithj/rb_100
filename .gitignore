@@ -1,5 +1,5 @@
 # Ignore files
-notes
+*.md
 rubytest.rb
 .DS_Store
 .rubocop.yml
