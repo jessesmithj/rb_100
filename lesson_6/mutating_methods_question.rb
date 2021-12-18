@@ -8,16 +8,16 @@ Example 1
 - String#<< method
 - Ruby Docs: string << object → str (returns string, not a new string- so should be a mutating method)
 - However, the description states that it returns a new string:
-- "Returns a new String containing the concatenation of self and object"
+- Ruby Doc: "Returns a new String containing the concatenation of self and object"
 =end
 
-a = "hi"
-puts "a's object_id is #{a.object_id}."
+# a = "hi"
+# puts "a's object_id is #{a.object_id}."
 
-a << " bye"
-puts "a's object_id is #{a.object_id}." #Same Object ID as before
+# a << " bye"
+# puts "a's object_id is #{a.object_id}." #Same Object ID as before
 
-puts a # the value in String object local variable a is pointing to has mutated, and it is the same object
+# puts a # the value in String object local variable a is pointing to has mutated, and it is the same object
 
 
 =begin 
@@ -26,16 +26,16 @@ Example 2
 - String#concat method
 - Ruby Docs: concat(*objects) → new_string
 - However, when running the below test, this does not appear to be a new string, but a mutating method, similar to String#<<
-- Ruby Doc: Returns a new String containing the concatenation of self and all objects in objects:
+- Ruby Doc: "Returns a new String containing the concatenation of self and all objects in objects:""
 =end
 
-a = "hi"
-puts "a's object_id is #{a.object_id}."
+# a = "hi"
+# puts "a's object_id is #{a.object_id}."
 
-a.concat(" bye")
-puts "a's object_id is #{a.object_id}." #Same Object ID as before
+# a.concat(" bye")
+# puts "a's object_id is #{a.object_id}." #Same Object ID as before
 
-puts a # the value in String object local variable a is pointing to has mutated, and it is also the same object
+# puts a # the value in String object local variable a is pointing to has mutated, and it is also the same object
 
 
 =begin 
@@ -51,3 +51,40 @@ Summary:
 3) Are one or both of these method definitions incorrect in the Ruby docs or is my mental model incorrect? 
 
 =end
+
+
+
+# a = 'name'
+# b = 'name'
+# c = 'name'
+
+# # Are these three local variables pointing to the same object?
+
+# puts a.object_id
+# puts b.object_id
+# puts c.object_id
+
+
+# - - - ALL DIFFERENT
+
+# # And when we add these two lines of code... ?
+
+# a = c
+# b = a
+
+# puts a.object_id
+# puts b.object_id
+# puts c.object_id
+
+# - - - ALL 3 variables are now pointing to the string object with value 'name' that variable C is pointing to
+
+# # What about now?
+# a = 5
+# b = 5
+# c = 5
+
+# puts a.object_id
+# puts b.object_id
+# puts c.object_id
+
+# - ALL 3 local variables are pointing to the same object with the value 5, as numbers are immutable
